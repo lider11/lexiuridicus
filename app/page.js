@@ -5,19 +5,19 @@ const values = [
   {
     title: 'Excelencia Jurídica',
     icon: '⚖️',
-    text: 'Asesoría técnica de alto nivel para decisiones críticas del negocio.',
+    text: 'Equipo experto en derecho empresarial con enfoque práctico para resolver retos complejos.',
     points: ['Abogados especialistas', 'Soluciones prácticas', 'Criterio preventivo']
   },
   {
     title: 'Compromiso y Cumplimiento',
     icon: '⏱️',
-    text: 'Ejecución puntual con seguimiento claro en cada etapa legal.',
+    text: 'Ejecución puntual, comunicación clara y seguimiento continuo de cada estrategia legal.',
     points: ['Plan de trabajo definido', 'Reportes periódicos', 'Acompañamiento continuo']
   },
   {
     title: 'Seguridad y Confidencialidad',
     icon: '🛡️',
-    text: 'Protección de información sensible bajo protocolos y trazabilidad.',
+    text: 'Protección de información sensible bajo protocolos estrictos y trazabilidad documental.',
     points: ['Canales seguros', 'Gestión documental', 'Reserva profesional']
   }
 ];
@@ -88,14 +88,16 @@ export default function HomePage() {
               </div>
               <h3 className="text-2xl font-bold text-navy">{value.title}</h3>
               <p className="mt-3 text-slate-700">{value.text}</p>
-              <ul className="mt-4 space-y-2 text-sm text-slate-600">
-                {value.points.map((point) => (
-                  <li key={point} className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-                    {point}
-                  </li>
-                ))}
-              </ul>
+              {Array.isArray(value.points) && value.points.length > 0 && (
+                <ul className="mt-4 space-y-2 text-sm text-slate-600">
+                  {value.points.map((point) => (
+                    <li key={point} className="flex items-center gap-2">
+                      <span className="h-1.5 w-1.5 rounded-full bg-gold" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </article>
           ))}
         </div>
