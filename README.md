@@ -19,8 +19,6 @@ npm run build
 - Tener una landing moderna para servicios jurídicos empresariales.
 - Dejar una base escalable para seguir avanzando en JavaScript con componentes interactivos.
 
-
-## Despliegue
+## Despliegue y merge
 - Guía de organización en servidor: `ORGANIZACION_SERVIDOR.md`
-
 - Resolución de conflicto de merge: `RESOLUCION_CONFLICTO_PR2.md`
