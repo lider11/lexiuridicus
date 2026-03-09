@@ -99,7 +99,8 @@ export default function HomePage() {
           {values.map((value, index) => (
             <article
               key={value.title}
-              className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:border-gold/50"
+              className="value-card-appear group rounded-2xl border border-slate-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-2xl"
+              style={{ animationDelay: `${index * 130}ms` }}
             >
               <div className="mb-4 flex items-center justify-between">
                 <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gold/15 text-2xl">
