@@ -4,28 +4,16 @@ import ServiceGrid from '../components/ServiceGrid';
 const values = [
   {
     title: 'Excelencia Jurídica',
-    icon: '⚖️',
-    text: 'Equipo experto en derecho empresarial con enfoque práctico para resolver retos complejos.',
-    points: ['Abogados especialistas', 'Soluciones prácticas', 'Criterio preventivo']
+    text: 'Equipo experto en derecho empresarial con enfoque práctico para resolver retos complejos.'
   },
   {
     title: 'Compromiso y Cumplimiento',
-    icon: '⏱️',
-    text: 'Ejecución puntual, comunicación clara y seguimiento continuo de cada estrategia legal.',
-    points: ['Plan de trabajo definido', 'Reportes periódicos', 'Acompañamiento continuo']
+    text: 'Ejecución puntual, comunicación clara y seguimiento continuo de cada estrategia legal.'
   },
   {
     title: 'Seguridad y Confidencialidad',
-    icon: '🛡️',
-    text: 'Protección de información sensible bajo protocolos estrictos y trazabilidad documental.',
-    points: ['Canales seguros', 'Gestión documental', 'Reserva profesional']
+    text: 'Protección de información sensible bajo protocolos estrictos y trazabilidad documental.'
   }
-];
-
-const trustMetrics = [
-  { label: 'Atención personalizada', value: '1:1' },
-  { label: 'Enfoque preventivo', value: '360°' },
-  { label: 'Seguimiento continuo', value: 'Mensual' }
 ];
 
 export default function HomePage() {
@@ -73,51 +61,12 @@ export default function HomePage() {
       </section>
 
       <section id="valores" className="mx-auto max-w-6xl px-4 py-16">
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft md:p-8">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-gold">Nuestra promesa</p>
-              <h2 className="section-title mt-2">Nuestros valores</h2>
-            </div>
-            <p className="max-w-2xl text-slate-600">
-              Trabajamos con estándares corporativos para que cada decisión legal sea clara, medible y segura.
-            </p>
-          </div>
-
-          <div className="mt-6 grid gap-3 rounded-xl bg-paper p-4 sm:grid-cols-3">
-            {trustMetrics.map((metric) => (
-              <div key={metric.label} className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-center">
-                <p className="text-xl font-bold text-navy">{metric.value}</p>
-                <p className="mt-1 text-xs font-medium uppercase tracking-wide text-slate-500">{metric.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
+        <h2 className="section-title">Nuestros valores</h2>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
-          {values.map((value, index) => (
-            <article
-              key={value.title}
-              className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:border-gold/50"
-            >
-              <div className="mb-4 flex items-center justify-between">
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gold/15 text-2xl">
-                  <span aria-hidden="true">{value.icon}</span>
-                </div>
-                <span className="text-sm font-bold text-slate-300">0{index + 1}</span>
-              </div>
+          {values.map((value) => (
+            <article key={value.title} className="card">
               <h3 className="text-2xl font-bold text-navy">{value.title}</h3>
-              <p className="mt-3 text-slate-700">{value.text}</p>
-              {Array.isArray(value.points) && value.points.length > 0 && (
-                <ul className="mt-4 space-y-2 text-sm text-slate-600">
-                  {value.points.map((point) => (
-                    <li key={point} className="flex items-center gap-2">
-                      <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <p className="mt-4 text-slate-700">{value.text}</p>
             </article>
           ))}
         </div>
