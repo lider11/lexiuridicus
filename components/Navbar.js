@@ -19,9 +19,9 @@ export default function Navbar() {
           <img
             src="/logo-lexiuridicus.svg"
             alt="Logo Lex Iuridicus"
-            width="46"
-            height="46"
-            className="h-11 w-11 rounded-xl"
+            width="52"
+            height="52"
+            className="h-12 w-12 rounded-xl ring-1 ring-gold/40"
           />
           <span className="leading-tight">
             <span className="block text-xl font-bold tracking-wide md:text-2xl">Lex Iuridicus</span>
