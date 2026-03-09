@@ -22,3 +22,5 @@ npm run build
 
 ## Despliegue
 - Guía de organización en servidor: `ORGANIZACION_SERVIDOR.md`
+
+- Resolución de conflicto de merge: `RESOLUCION_CONFLICTO_PR2.md`
