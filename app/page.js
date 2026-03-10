@@ -1,5 +1,6 @@
 import Navbar from '../components/Navbar';
 import ServiceGrid from '../components/ServiceGrid';
+import ContactForm from '../components/ContactForm';
 
 // Constantes para la sección valores (ya definidas para que compile)
 const values = [
@@ -44,26 +45,34 @@ const trustMetrics = [
 export default function HomePage() {
   return (
     <main id="inicio">
+      {/* Skip Link for Accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-gold text-navy px-4 py-2 rounded-md font-semibold z-50"
+      >
+        Saltar al contenido principal
+      </a>
+
       <Navbar />
 
-      {/* Hero / Banner principal (copia tu versión anterior o usa esta básica) */}
-      <section className="bg-navy text-white">
+      {/* Hero / Banner principal */}
+      <section className="bg-navy text-white" aria-labelledby="hero-heading">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-2 md:items-center">
           <div>
             <p className="mb-4 inline-block rounded-full border border-gold/70 px-3 py-1 text-sm text-gold">
               Servicios Jurídicos Empresariales
             </p>
-            <h1 className="text-4xl font-bold leading-tight md:text-5xl">
+            <h1 id="hero-heading" className="text-4xl font-bold leading-tight md:text-5xl">
               Asesoría legal estratégica para empresas que quieren crecer con seguridad.
             </h1>
             <p className="mt-5 max-w-xl text-white/85">
               Acompañamos a tu organización en cumplimiento normativo, gestión de riesgos y decisiones corporativas de alto impacto.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a href="#contacto" className="rounded-xl bg-gold px-6 py-3 font-semibold text-navy transition hover:brightness-95">
+              <a href="#contacto" className="rounded-xl bg-gold px-6 py-3 font-semibold text-navy transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-navy">
                 Agenda una consulta
               </a>
-              <a href="#servicios" className="rounded-xl border border-white/60 px-6 py-3 font-semibold text-white">
+              <a href="#servicios" className="rounded-xl border border-white/60 px-6 py-3 font-semibold text-white hover:bg-white/10 transition focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-navy">
                 Ver servicios
               </a>
             </div>
@@ -184,14 +193,7 @@ export default function HomePage() {
           <p className="mt-4 text-lg text-slate-700">
             Cuéntanos tu caso y agenda una reunión de valoración con nuestro equipo legal.
           </p>
-          <form className="mt-8 grid gap-4 text-left">
-            <input type="text" placeholder="Nombre completo" className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none ring-gold transition focus:ring" />
-            <input type="email" placeholder="Correo corporativo" className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none ring-gold transition focus:ring" />
-            <textarea placeholder="¿Qué necesitas resolver?" rows="4" className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none ring-gold transition focus:ring" />
-            <button type="button" className="rounded-xl bg-gold px-6 py-3 font-semibold text-navy transition hover:brightness-95">
-              Enviar solicitud
-            </button>
-          </form>
+          <ContactForm />
         </div>
       </section>
     </main>

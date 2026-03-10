@@ -3,7 +3,15 @@ import { Briefcase, CheckCircle, Target, Users, ArrowLeft, Gavel, FileText, Hand
 
 export const metadata = {
   title: 'Gobierno Corporativo | Lex Iuridicus',
-  description: 'Servicios de gobierno corporativo: estructuras societarias, protocolos de juntas, actas, alineación estratégica y responsabilidades fiduciarias.'
+  description: 'Servicios de gobierno corporativo: estructuras de control, protocolos de juntas, alineación estratégica y responsabilidades fiduciarias de los órganos directivos.',
+  openGraph: {
+    title: 'Gobierno Corporativo | Lex Iuridicus',
+    description: 'Profesionalizamos la dirección y control de tu empresa para decisiones estratégicas seguras y transparentes.',
+    url: 'https://darkslateblue-sheep-899946.hostingersite.com/servicios/gobierno-corporativo',
+    type: 'website',
+    siteName: 'Lex Iuridicus'
+  },
+  keywords: 'gobierno corporativo, consejo de administración, alineación estratégica, responsabilidades fiduciarias, estructuras de control'
 };
 
 export default function CorporativoPage() {
@@ -21,6 +29,27 @@ export default function CorporativoPage() {
               Volver a servicios
             </Link>
           </div>
+
+          {/* Breadcrumbs */}
+          <nav aria-label="Breadcrumb" className="mb-6">
+            <ol className="flex items-center justify-center space-x-2 text-sm text-white/80">
+              <li>
+                <Link href="/" className="hover:text-gold transition-colors">
+                  Inicio
+                </Link>
+              </li>
+              <li aria-hidden="true" className="text-white/60">/</li>
+              <li>
+                <Link href="/#servicios" className="hover:text-gold transition-colors">
+                  Servicios
+                </Link>
+              </li>
+              <li aria-hidden="true" className="text-white/60">/</li>
+              <li aria-current="page" className="text-gold">
+                Gobierno Corporativo
+              </li>
+            </ol>
+          </nav>
 
           <div className="text-center max-w-4xl mx-auto">
             <div className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-2xl bg-blue-600/20 backdrop-blur-sm shadow-lg">
@@ -82,6 +111,8 @@ export default function CorporativoPage() {
           </p>
         </div>
 
+        <h3 className="text-2xl font-bold text-navy mb-8">Servicios de gobierno corporativo</h3>
+
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {[
             {
@@ -119,7 +150,7 @@ export default function CorporativoPage() {
                   <item.icon className="h-8 w-8 text-blue-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-navy mb-3">{item.title}</h3>
+                  <h4 className="text-xl font-bold text-navy mb-3">{item.title}</h4>
                   <p className="text-slate-700 leading-relaxed">{item.description}</p>
                 </div>
               </div>

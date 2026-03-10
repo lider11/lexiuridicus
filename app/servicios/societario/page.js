@@ -2,8 +2,16 @@ import Link from 'next/link';
 import { Users, Gavel, FileText, Handshake, Scale, CheckCircle, Target, ArrowLeft, ShieldCheck } from 'lucide-react';
 
 export const metadata = {
-    title: 'Societario y Acciones | Lex Iuridicus',
-    description: 'Servicios societarios: constitución de sociedades, reforma de estatutos, pactos de accionistas y estructuración de capital.'
+  title: 'Asesoría Societaria y Acciones | Lex Iuridicus',
+  description: 'Asesoría integral en derecho societario: constitución de empresas, reforma de estatutos, pactos entre accionistas y estructuración de capital.',
+  openGraph: {
+    title: 'Asesoría Societaria y Acciones | Lex Iuridicus',
+    description: 'Constitución, reforma de estatutos y estructuración de pactos para una empresa sólida y atractiva para inversores.',
+    url: 'https://darkslateblue-sheep-899946.hostingersite.com/servicios/societario',
+    type: 'website',
+    siteName: 'Lex Iuridicus'
+  },
+  keywords: 'derecho societario, constitución de empresas, pactos entre accionistas, reforma de estatutos, asesoría corporativa'
 };
 
 export default function SocietarioPage() {
@@ -21,6 +29,27 @@ export default function SocietarioPage() {
                             Volver a servicios
                         </Link>
                     </div>
+
+                    {/* Breadcrumbs */}
+                    <nav aria-label="Breadcrumb" className="mb-6">
+                        <ol className="flex items-center justify-center space-x-2 text-sm text-white/80">
+                            <li>
+                                <Link href="/" className="hover:text-gold transition-colors">
+                                    Inicio
+                                </Link>
+                            </li>
+                            <li aria-hidden="true" className="text-white/60">/</li>
+                            <li>
+                                <Link href="/#servicios" className="hover:text-gold transition-colors">
+                                    Servicios
+                                </Link>
+                            </li>
+                            <li aria-hidden="true" className="text-white/60">/</li>
+                            <li aria-current="page" className="text-gold">
+                                Societario y Acciones
+                            </li>
+                        </ol>
+                    </nav>
 
                     <div className="text-center max-w-4xl mx-auto">
                         <div className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-2xl bg-amber-600/20 backdrop-blur-sm shadow-lg">
@@ -82,6 +111,8 @@ export default function SocietarioPage() {
                     </p>
                 </div>
 
+                <h3 className="text-2xl font-bold text-navy mb-8">Servicios de asesoría societaria</h3>
+
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                     {[
                         {
@@ -119,7 +150,7 @@ export default function SocietarioPage() {
                                     <item.icon className="h-8 w-8 text-amber-600" />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold text-navy mb-3">{item.title}</h3>
+                                    <h4 className="text-xl font-bold text-navy mb-3">{item.title}</h4>
                                     <p className="text-slate-700 leading-relaxed">{item.description}</p>
                                 </div>
                             </div>

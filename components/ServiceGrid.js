@@ -64,7 +64,11 @@ export default function ServiceGrid() {
         {/* Tabs visuales (sin filtrado real) */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
           {['Todos', 'Corporativo', 'Cumplimiento', 'Patrimonial', 'Societario'].map((filter) => (
-            <button key={filter} className="px-6 py-3 rounded-full font-medium text-sm bg-white border border-gold/30 hover:bg-gold/10">
+            <button
+              key={filter}
+              className="px-6 py-3 rounded-full font-medium text-sm bg-white border-2 border-gold/50 text-navy hover:bg-gold hover:text-navy transition-all focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
+              aria-pressed="false"
+            >
               {filter}
             </button>
           ))}

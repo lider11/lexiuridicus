@@ -2,8 +2,16 @@ import Link from 'next/link';
 import { ShieldCheck, CheckCircle, Target, AlertTriangle, BookOpen, Users, ArrowLeft } from 'lucide-react';
 
 export const metadata = {
-  title: 'Cumplimiento y Riesgos | Lex Iuridicus',
-  description: 'Servicios de cumplimiento normativo y gestión de riesgos legales para empresas: mapeo, controles internos, prevención de sanciones y seguimiento continuo.'
+  title: 'Cumplimiento y Gestión de Riesgos | Lex Iuridicus',
+  description: 'Asesoría integral en cumplimiento normativo y gestión de riesgos legales: mapeo regulatorio, controles internos, prevención de sanciones y auditorías continuas.',
+  openGraph: {
+    title: 'Cumplimiento y Gestión de Riesgos | Lex Iuridicus',
+    description: 'Protege tu empresa con estrategias preventivas de cumplimiento normativo y gestión integral de riesgos legales.',
+    url: 'https://darkslateblue-sheep-899946.hostingersite.com/servicios/cumplimiento',
+    type: 'website',
+    siteName: 'Lex Iuridicus'
+  },
+  keywords: 'cumplimiento normativo, gestión de riesgos, controles internos, auditoría legal, prevención de sanciones'
 };
 
 export default function CumplimientoPage() {
@@ -21,6 +29,27 @@ export default function CumplimientoPage() {
               Volver a servicios
             </Link>
           </div>
+
+          {/* Breadcrumbs */}
+          <nav aria-label="Breadcrumb" className="mb-6">
+            <ol className="flex items-center justify-center space-x-2 text-sm text-white/80">
+              <li>
+                <Link href="/" className="hover:text-gold transition-colors">
+                  Inicio
+                </Link>
+              </li>
+              <li aria-hidden="true" className="text-white/60">/</li>
+              <li>
+                <Link href="/#servicios" className="hover:text-gold transition-colors">
+                  Servicios
+                </Link>
+              </li>
+              <li aria-hidden="true" className="text-white/60">/</li>
+              <li aria-current="page" className="text-gold">
+                Cumplimiento y Riesgos
+              </li>
+            </ol>
+          </nav>
 
           <div className="text-center max-w-4xl mx-auto">
             <div className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-2xl bg-green-600/20 backdrop-blur-sm">
@@ -87,27 +116,32 @@ export default function CumplimientoPage() {
             {
               title: 'Diagnóstico normativo completo',
               description: 'Mapeamos todas las leyes, regulaciones y estándares aplicables a tu sector y operaciones.',
-              icon: BookOpen
+              icon: BookOpen,
+              category: 'Análisis y Diagnóstico'
             },
             {
               title: 'Diseño de controles internos',
               description: 'Creamos políticas, procedimientos y controles efectivos para prevenir incumplimientos.',
-              icon: ShieldCheck
+              icon: ShieldCheck,
+              category: 'Implementación'
             },
             {
               title: 'Auditorías y monitoreo continuo',
               description: 'Realizamos revisiones periódicas y establecemos sistemas de alerta temprana.',
-              icon: Target
+              icon: Target,
+              category: 'Monitoreo'
             },
             {
               title: 'Capacitación especializada',
               description: 'Entrenamos a tu equipo en cumplimiento normativo y gestión de riesgos.',
-              icon: Users
+              icon: Users,
+              category: 'Capacitación'
             },
             {
               title: 'Planes de contingencia',
               description: 'Desarrollamos protocolos de respuesta ante posibles incumplimientos o sanciones.',
-              icon: AlertTriangle
+              icon: AlertTriangle,
+              category: 'Respuesta'
             }
           ].map((item, i) => (
             <div
@@ -119,7 +153,8 @@ export default function CumplimientoPage() {
                   <item.icon className="h-8 w-8 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-navy mb-3">{item.title}</h3>
+                  <h3 className="text-xl font-bold text-navy mb-2">{item.title}</h3>
+                  <h4 className="text-sm font-semibold text-green-600 uppercase tracking-wide mb-3">{item.category}</h4>
                   <p className="text-slate-700 leading-relaxed">{item.description}</p>
                 </div>
               </div>

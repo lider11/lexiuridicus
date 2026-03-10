@@ -3,7 +3,15 @@ import { Scale, CheckCircle, Target, Users, HeartHandshake, ShieldCheck, FileTex
 
 export const metadata = {
   title: 'Protocolo de Familia | Lex Iuridicus',
-  description: 'Servicios de protocolo de familia: acuerdos sucesorios, continuidad patrimonial, gobernanza familiar y prevención de conflictos hereditarios.'
+  description: 'Servicios especializados en protocolo de familia: acuerdos sucesorios, gobernanza familiar, continuidad patrimonial y prevención de conflictos hereditarios.',
+  openGraph: {
+    title: 'Protocolo de Familia | Lex Iuridicus',
+    description: 'Aseguramos la armonía familiar y continuidad patrimonial a través de acuerdos claros y gobernanza familiar efectiva.',
+    url: 'https://darkslateblue-sheep-899946.hostingersite.com/servicios/patrimonial',
+    type: 'website',
+    siteName: 'Lex Iuridicus'
+  },
+  keywords: 'protocolo de familia, sucesiones, gobernanza familiar, acuerdos familiares, planificación patrimonial'
 };
 
 export default function PatrimonialPage() {
@@ -21,6 +29,27 @@ export default function PatrimonialPage() {
               Volver a servicios
             </Link>
           </div>
+
+          {/* Breadcrumbs */}
+          <nav aria-label="Breadcrumb" className="mb-6">
+            <ol className="flex items-center justify-center space-x-2 text-sm text-white/80">
+              <li>
+                <Link href="/" className="hover:text-gold transition-colors">
+                  Inicio
+                </Link>
+              </li>
+              <li aria-hidden="true" className="text-white/60">/</li>
+              <li>
+                <Link href="/#servicios" className="hover:text-gold transition-colors">
+                  Servicios
+                </Link>
+              </li>
+              <li aria-hidden="true" className="text-white/60">/</li>
+              <li aria-current="page" className="text-gold">
+                Protocolo de Familia
+              </li>
+            </ol>
+          </nav>
 
           <div className="text-center max-w-4xl mx-auto">
             <div className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-2xl bg-purple-600/20 backdrop-blur-sm shadow-lg">
@@ -82,6 +111,8 @@ export default function PatrimonialPage() {
           </p>
         </div>
 
+        <h3 className="text-2xl font-bold text-navy mb-8">Servicios de protocolo familiar</h3>
+
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {[
             {
@@ -119,7 +150,7 @@ export default function PatrimonialPage() {
                   <item.icon className="h-8 w-8 text-purple-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-navy mb-3">{item.title}</h3>
+                  <h4 className="text-xl font-bold text-navy mb-3">{item.title}</h4>
                   <p className="text-slate-700 leading-relaxed">{item.description}</p>
                 </div>
               </div>
