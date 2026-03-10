@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
 import Link from 'next/link';
 import { serviceFilters, services } from '../data/services';
+import { trackEvent } from '../lib/analytics';
 
 const colorStyles = {
   blue: {
@@ -54,6 +55,7 @@ export default function ServiceGrid() {
   const openModal = (service, event) => {
     openerRef.current = event.currentTarget;
     setSelectedService(service);
+    trackEvent('service_modal_open', { service: service.title });
   };
 
   const closeModal = () => {
@@ -96,8 +98,6 @@ export default function ServiceGrid() {
 
   const selectedStyle = selectedService ? colorStyles[selectedService.color] : null;
 
-  const selectedStyle = selectedService ? colorStyles[selectedService.color] : null;
-
   return (
     <section id="servicios" className="bg-gray-50 py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -110,7 +110,10 @@ export default function ServiceGrid() {
           {serviceFilters.map((filter) => (
             <button
               key={filter}
-              onClick={() => setActiveFilter(filter)}
+              onClick={() => {
+                setActiveFilter(filter);
+                trackEvent('service_filter_click', { filter });
+              }}
               className={`rounded-full border-2 px-6 py-3 text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 ${
                 activeFilter === filter
                   ? 'border-gold bg-gold text-navy'
@@ -200,6 +203,7 @@ export default function ServiceGrid() {
             <div className="flex justify-center">
               <Link
                 href={selectedService.detailPage}
+                onClick={() => trackEvent('service_detail_click', { service: selectedService.title })}
                 className="inline-flex items-center rounded-2xl bg-navy px-10 py-5 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:bg-gray-900"
               >
                 Ver detalles completos del servicio

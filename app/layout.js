@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import './globals.css';
 
 export const metadata = {
@@ -46,6 +47,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -82,6 +86,20 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        {gaId && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                window.gtag = gtag;
+                gtag('js', new Date());
+                gtag('config', '${gaId}');
+              `}
+            </Script>
+          </>
+        )}
         {children}
       </body>
     </html>

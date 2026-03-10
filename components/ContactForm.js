@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { trackEvent } from '../lib/analytics';
 
 const initialData = {
   name: '',
@@ -83,6 +84,7 @@ export default function ContactForm() {
         type: 'success',
         text: result.message || '¡Mensaje enviado exitosamente! Nos pondremos en contacto pronto.'
       });
+      trackEvent('contact_submit_success', { form: 'home_contact' });
       setFormData(initialData);
       setErrors({});
     } catch (error) {
@@ -90,6 +92,7 @@ export default function ContactForm() {
         type: 'error',
         text: error.message || 'Ocurrió un error al enviar el formulario.'
       });
+      trackEvent('contact_submit_error', { form: 'home_contact' });
     } finally {
       setIsSubmitting(false);
     }
