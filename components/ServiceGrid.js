@@ -12,7 +12,7 @@ const services = [
     description: 'Diseñamos estructuras, juntas y actas alineadas a la estrategia empresarial.',
     icon: Briefcase,
     color: 'blue',
-    detailPage: '/servicios/corporativo',
+    detailPage: '/servicios/gobierno-corporativo',
     fullDescription: 'Explicación completa del servicio Gobierno Corporativo...'
   },
   {
