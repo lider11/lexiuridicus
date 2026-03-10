@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-import { Briefcase, ShieldCheck, Scale, Users, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { X } from 'lucide-react';
 import Link from 'next/link';
+import { serviceFilters, services } from '../data/services';
 
 const colorStyles = {
   blue: {
@@ -39,54 +40,61 @@ const colorStyles = {
   }
 };
 
-const services = [
-  {
-    id: 1,
-    category: 'Corporativo',
-    title: 'Gobierno Corporativo',
-    description: 'Diseñamos estructuras, juntas y actas alineadas a la estrategia empresarial.',
-    icon: Briefcase,
-    color: 'blue',
-    detailPage: '/servicios/gobierno-corporativo',
-    fullDescription: 'Explicación completa del servicio Gobierno Corporativo...'
-  },
-  {
-    id: 2,
-    category: 'Cumplimiento',
-    title: 'Cumplimiento y Riesgos',
-    description: 'Implementamos mapas normativos, controles internos y seguimiento legal.',
-    icon: ShieldCheck,
-    color: 'green',
-    detailPage: '/servicios/cumplimiento',
-    fullDescription: 'Detalles de Cumplimiento y Riesgos...'
-  },
-  {
-    id: 3,
-    category: 'Patrimonial',
-    title: 'Protocolo de Familia',
-    description: 'Acompañamos acuerdos familiares para continuidad patrimonial y de gestión.',
-    icon: Scale,
-    color: 'purple',
-    detailPage: '/servicios/patrimonial',
-    fullDescription: 'Protocolo de Familia en profundidad...'
-  },
-  {
-    id: 4,
-    category: 'Societario',
-    title: 'Societario y Acciones',
-    description: 'Constitución, reforma de estatutos y estructuración de pactos de accionistas.',
-    icon: Users,
-    color: 'amber',
-    detailPage: '/servicios/societario',
-    fullDescription: 'Societario y Acciones detallado...'
-  }
-];
+const focusableSelector = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
 
 export default function ServiceGrid() {
   const [selectedService, setSelectedService] = useState(null);
+  const [activeFilter, setActiveFilter] = useState('Todos');
+  const modalRef = useRef(null);
+  const openerRef = useRef(null);
 
-  const openModal = (service) => setSelectedService(service);
-  const closeModal = () => setSelectedService(null);
+  const filteredServices =
+    activeFilter === 'Todos' ? services : services.filter((service) => service.category === activeFilter);
+
+  const openModal = (service, event) => {
+    openerRef.current = event.currentTarget;
+    setSelectedService(service);
+  };
+
+  const closeModal = () => {
+    setSelectedService(null);
+    openerRef.current?.focus();
+  };
+
+  useEffect(() => {
+    if (!selectedService || !modalRef.current) {
+      return;
+    }
+
+    const modalNode = modalRef.current;
+    const focusableElements = Array.from(modalNode.querySelectorAll(focusableSelector));
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    firstElement?.focus();
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeModal();
+      }
+
+      if (event.key === 'Tab' && focusableElements.length > 1) {
+        if (event.shiftKey && document.activeElement === firstElement) {
+          event.preventDefault();
+          lastElement.focus();
+        } else if (!event.shiftKey && document.activeElement === lastElement) {
+          event.preventDefault();
+          firstElement.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [selectedService]);
+
+  const selectedStyle = selectedService ? colorStyles[selectedService.color] : null;
 
   const selectedStyle = selectedService ? colorStyles[selectedService.color] : null;
 
@@ -98,12 +106,18 @@ export default function ServiceGrid() {
           <p className="mt-4 text-xl text-slate-600">Soluciones legales especializadas para cada área clave de tu empresa.</p>
         </div>
 
-        <div className="mb-12 flex flex-wrap justify-center gap-4">
-          {['Todos', 'Corporativo', 'Cumplimiento', 'Patrimonial', 'Societario'].map((filter) => (
+        <div className="mb-12 flex flex-wrap justify-center gap-4" role="tablist" aria-label="Filtro de servicios">
+          {serviceFilters.map((filter) => (
             <button
               key={filter}
-              className="rounded-full border-2 border-gold/50 bg-white px-6 py-3 text-sm font-medium text-navy transition-all hover:bg-gold hover:text-navy focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
-              aria-pressed="false"
+              onClick={() => setActiveFilter(filter)}
+              className={`rounded-full border-2 px-6 py-3 text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 ${
+                activeFilter === filter
+                  ? 'border-gold bg-gold text-navy'
+                  : 'border-gold/50 bg-white text-navy hover:bg-gold/20'
+              }`}
+              aria-selected={activeFilter === filter}
+              role="tab"
             >
               {filter}
             </button>
@@ -111,14 +125,23 @@ export default function ServiceGrid() {
         </div>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {services.map((service) => {
+          {filteredServices.map((service) => {
             const Icon = service.icon;
             const serviceStyle = colorStyles[service.color];
 
             return (
               <article
                 key={service.id}
-                onClick={() => openModal(service)}
+                onClick={(event) => openModal(service, event)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openModal(service, event);
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-label={`Abrir detalle de ${service.title}`}
                 className={`group cursor-pointer rounded-2xl border border-slate-100 bg-white p-8 shadow-lg transition-all duration-500 ease-out hover:-translate-y-4 hover:shadow-2xl ${serviceStyle.hoverBorder}`}
               >
                 <div className="mb-6 flex justify-center">
@@ -131,7 +154,7 @@ export default function ServiceGrid() {
                 </h3>
                 <p className="text-center text-slate-700">{service.description}</p>
                 <div className="mt-6 text-center">
-                  <span className="cursor-pointer font-medium text-gold">Ver más →</span>
+                  <span className="font-medium text-gold">Ver más →</span>
                 </div>
               </article>
             );
@@ -145,9 +168,10 @@ export default function ServiceGrid() {
           onClick={closeModal}
           role="dialog"
           aria-modal="true"
-          aria-label={`Detalle de ${selectedService.title}`}
+          aria-labelledby="service-modal-title"
         >
           <div
+            ref={modalRef}
             className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-gray-200 bg-white p-10 shadow-2xl transition-all duration-300"
             onClick={(e) => e.stopPropagation()}
           >
@@ -165,7 +189,9 @@ export default function ServiceGrid() {
               </div>
             </div>
 
-            <h3 className="mb-6 text-center text-4xl font-bold text-navy">{selectedService.title}</h3>
+            <h3 id="service-modal-title" className="mb-6 text-center text-4xl font-bold text-navy">
+              {selectedService.title}
+            </h3>
 
             <p className="mb-10 px-4 text-center text-lg leading-relaxed text-slate-700">
               {selectedService.fullDescription || selectedService.description}
