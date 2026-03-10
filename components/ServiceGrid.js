@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Briefcase, ShieldCheck, Scale, Users, X } from 'lucide-react';
 import Link from 'next/link';
 
@@ -13,7 +13,7 @@ const services = [
     icon: Briefcase,
     color: 'blue',
     detailPage: '/servicios/corporativo',
-    fullDescription: 'Explicación completa del servicio: estructuras societarias, protocolos de juntas, actas, alineación estratégica, responsabilidades fiduciarias, etc.'
+    fullDescription: 'Explicación completa del servicio Gobierno Corporativo...'
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const services = [
     icon: ShieldCheck,
     color: 'green',
     detailPage: '/servicios/cumplimiento',
-    fullDescription: 'Detalles de Cumplimiento y Riesgos: mapeo de normativas, controles internos, gestión de riesgos legales, auditorías, prevención de sanciones, etc.'
+    fullDescription: 'Detalles de Cumplimiento y Riesgos...'
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ const services = [
     icon: Scale,
     color: 'purple',
     detailPage: '/servicios/patrimonial',
-    fullDescription: 'Protocolo de Familia en profundidad: acuerdos sucesorios, continuidad patrimonial, gobernanza familiar, planificación hereditaria, protección de activos, etc.'
+    fullDescription: 'Protocolo de Familia en profundidad...'
   },
   {
     id: 4,
@@ -43,20 +43,12 @@ const services = [
     icon: Users,
     color: 'amber',
     detailPage: '/servicios/societario',
-    fullDescription: 'Societario y Acciones detallado: constitución de sociedades, reformas estatutarias, pactos parasociales, derechos de accionistas, juntas generales, etc.'
+    fullDescription: 'Societario y Acciones detallado...'
   },
 ];
 
-const filters = ['Todos', ...new Set(services.map((item) => item.category))];
-
 export default function ServiceGrid() {
-  const [activeFilter, setActiveFilter] = useState('Todos');
   const [selectedService, setSelectedService] = useState(null);
-
-  const filteredServices = useMemo(
-    () => (activeFilter === 'Todos' ? services : services.filter(s => s.category === activeFilter)),
-    [activeFilter]
-  );
 
   const openModal = (service) => setSelectedService(service);
   const closeModal = () => setSelectedService(null);
@@ -66,75 +58,43 @@ export default function ServiceGrid() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-navy">Servicios destacados</h2>
-          <p className="mt-4 text-xl text-slate-600 max-w-3xl mx-auto">
-            Soluciones legales especializadas para cada área clave de tu empresa.
-          </p>
+          <p className="mt-4 text-xl text-slate-600">Soluciones legales especializadas para cada área clave de tu empresa.</p>
         </div>
 
-        {/* Filtros */}
+        {/* Tabs visuales (sin filtrado real) */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {filters.map((filter) => (
-            <button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
-              className={`
-                px-6 py-3 rounded-full font-medium text-sm transition-all duration-300 shadow-sm
-                ${activeFilter === filter
-                  ? 'bg-gold text-navy shadow-lg scale-105 border-gold'
-                  : 'bg-white text-navy border border-gold/30 hover:bg-gold/10 hover:border-gold hover:shadow-md hover:scale-102'}
-              `}
-            >
+          {['Todos', 'Corporativo', 'Cumplimiento', 'Patrimonial', 'Societario'].map((filter) => (
+            <button key={filter} className="px-6 py-3 rounded-full font-medium text-sm bg-white border border-gold/30 hover:bg-gold/10">
               {filter}
             </button>
           ))}
         </div>
 
-        {/* Grid de tarjetas */}
+        {/* Grid siempre visible */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {filteredServices.map((service, index) => {
+          {services.map((service) => {
             const Icon = service.icon;
             return (
               <article
                 key={service.id}
                 onClick={() => openModal(service)}
                 className={`
-                  group cursor-pointer relative bg-white rounded-2xl p-8 shadow-lg border border-slate-100 overflow-hidden
-                  hover:shadow-2xl hover:border-${service.color}-300 hover:-translate-y-4
+                  group cursor-pointer bg-white rounded-2xl p-8 shadow-lg border border-slate-100 
+                  hover:shadow-2xl hover:-translate-y-4 hover:border-${service.color}-300
                   transition-all duration-500 ease-out
                 `}
-                style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className={`
-                  absolute inset-0 bg-gradient-to-br from-${service.color}-50/40 to-transparent 
-                  opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none
-                `} />
-
                 <div className="flex justify-center mb-6">
-                  <div className={`
-                    p-5 rounded-full bg-${service.color}-100/50 group-hover:bg-${service.color}-200/70
-                    transition-all duration-500 shadow-md group-hover:scale-110 group-hover:rotate-3
-                  `}>
-                    <Icon className={`w-14 h-14 text-${service.color}-600 group-hover:text-${service.color}-800 transition-colors duration-500`} />
+                  <div className={`p-5 rounded-full bg-${service.color}-100/50 group-hover:bg-${service.color}-200/70 transition-all`}>
+                    <Icon className={`w-14 h-14 text-${service.color}-600 group-hover:text-${service.color}-800 transition-colors`} />
                   </div>
                 </div>
-
-                <h3 className={`text-2xl font-bold text-center mb-4 text-navy group-hover:text-${service.color}-700 transition-colors duration-500`}>
+                <h3 className={`text-2xl font-bold text-center mb-4 text-navy group-hover:text-${service.color}-700 transition-colors`}>
                   {service.title}
                 </h3>
-
-                <p className="text-slate-700 text-center leading-relaxed mb-6">
-                  {service.description}
-                </p>
-
-                <div className="text-center mt-auto">
-                  <button className={`
-                    inline-flex items-center px-6 py-3 bg-${service.color}-600 text-white font-medium 
-                    rounded-lg hover:bg-${service.color}-700 transition-all duration-300 shadow-md
-                    group-hover:scale-105
-                  `}>
-                    Ver más
-                    <span className="ml-2">→</span>
-                  </button>
+                <p className="text-slate-700 text-center">{service.description}</p>
+                <div className="text-center mt-6">
+                  <span className="text-gold font-medium cursor-pointer">Ver más →</span>
                 </div>
               </article>
             );
@@ -142,62 +102,56 @@ export default function ServiceGrid() {
         </div>
       </div>
 
-      {/* Modal centrado perfectamente */}
+      {/* MODAL CENTRADO EN TODA LA PANTALLA */}
       {selectedService && (
         <div
-          className="fixed inset-0 bg-black/70 z-50 backdrop-blur-sm overflow-y-auto"
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 backdrop-blur-sm"
           onClick={closeModal}
         >
-          <div className="flex items-center justify-center min-h-screen px-4">
-            <div
-              className={`
-                relative bg-white rounded-2xl p-8 w-full max-w-lg max-h-[90vh] overflow-y-auto
-                shadow-2xl border border-${selectedService.color}-300 transform transition-all duration-300
-                scale-100 opacity-100
-              `}
-              onClick={(e) => e.stopPropagation()} // Evita cerrar al clic dentro
+          <div
+            className={`
+              relative bg-white rounded-3xl p-10 max-w-2xl w-full max-h-[90vh] overflow-y-auto
+              shadow-2xl border border-gray-200 transform transition-all duration-300
+            `}
+            onClick={(e) => e.stopPropagation()} // Evita cerrar al clic dentro
+          >
+            {/* Botón cerrar */}
+            <button
+              onClick={closeModal}
+              className="absolute top-5 right-5 text-gray-500 hover:text-gray-800 transition p-2 rounded-full hover:bg-gray-100"
             >
-              {/* Botón cerrar */}
-              <button
-                onClick={closeModal}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition p-2 rounded-full hover:bg-gray-100"
-              >
-                <X className="w-8 h-8" />
-              </button>
+              <X size={32} />
+            </button>
 
-              {/* Icono grande */}
-              <div className="flex justify-center mb-8">
-                <div className={`
-                p-6 rounded-full bg-${selectedService.color}-100/50
-              `}>
-                  <selectedService.icon className={`w-24 h-24 text-${selectedService.color}-600`} />
-                </div>
+            {/* Icono grande */}
+            <div className="flex justify-center mb-8">
+              <div className={`p-6 rounded-full bg-${selectedService.color}-100/50`}>
+                <selectedService.icon className={`w-24 h-24 text-${selectedService.color}-600`} />
               </div>
+            </div>
 
-              {/* Título */}
-              <h3 className={`text-3xl font-bold text-center mb-6 text-navy`}>
-                {selectedService.title}
-              </h3>
+            {/* Título */}
+            <h3 className={`text-4xl font-bold text-center mb-6 text-navy`}>
+              {selectedService.title}
+            </h3>
 
-              {/* Descripción ampliada */}
-              <p className="text-slate-700 text-lg leading-relaxed mb-8 text-center">
-                {selectedService.fullDescription || selectedService.description}
-              </p>
+            {/* Descripción completa */}
+            <p className="text-slate-700 text-lg leading-relaxed mb-10 text-center px-4">
+              {selectedService.fullDescription || selectedService.description}
+            </p>
 
-              {/* Botón para página detallada */}
-              <div className="text-center">
-                <Link
-                  href={selectedService.detailPage}
-                  className={`
-                  inline-flex items-center px-8 py-4 bg-${selectedService.color}-600 text-white font-semibold 
-                  rounded-lg hover:bg-${selectedService.color}-700 transition-all duration-300 shadow-lg
-                  text-lg
+            {/* Botón a página detallada */}
+            <div className="flex justify-center">
+              <Link
+                href={selectedService.detailPage}
+                className={`
+                  inline-flex items-center px-10 py-5 bg-navy text-white font-semibold text-lg
+                  rounded-2xl hover:bg-gray-900 transition-all duration-300 shadow-lg
                 `}
-                >
-                  Ver detalles completos del servicio
-                  <span className="ml-3">→</span>
-                </Link>
-              </div>
+              >
+                Ver detalles completos del servicio
+                <span className="ml-3">→</span>
+              </Link>
             </div>
           </div>
         </div>
