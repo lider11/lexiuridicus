@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Briefcase, CheckCircle, Target, Users, ArrowLeft, Gavel, FileText, Handshake, Scale } from 'lucide-react';
+import { Briefcase, CheckCircle, Target, Users, ArrowLeft, Gavel, FileText, Handshake, Scale, ShieldCheck } from 'lucide-react';
 
 export const metadata = {
   title: 'Gobierno Corporativo | Lex Iuridicus',
