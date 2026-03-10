@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Navbar from '../components/Navbar';
 import ServiceGrid from '../components/ServiceGrid';
 
@@ -172,11 +173,11 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-3">
           <div>
             <div className="flex items-center gap-3">
-              <img
+              <Image
                 src="/logo-lexiuridicus.svg"
                 alt="Logo Lex Iuridicus"
-                width="44"
-                height="44"
+                width={44}
+                height={44}
                 className="h-11 w-11 rounded-xl ring-1 ring-gold/40"
               />
               <div>
