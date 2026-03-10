@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /.next/
+Disallow: /api/
+Disallow: /_next/
+
+# Allow crawling of Next.js static assets
+Allow: /_next/static/
+
+# Sitemap
+Sitemap: https://darkslateblue-sheep-899946.hostingersite.com/sitemap.xml
