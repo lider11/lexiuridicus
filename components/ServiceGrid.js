@@ -144,11 +144,11 @@ export default function ServiceGrid() {
 
       {/* Modal centrado perfectamente */}
       {selectedService && (
-        <div 
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 backdrop-blur-sm"
+        <div
+          className="fixed inset-0 bg-black/70 grid place-items-center z-50 p-4 backdrop-blur-sm"
           onClick={closeModal}
         >
-          <div 
+          <div
             className={`
               relative bg-white rounded-2xl p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto
               shadow-2xl border border-${selectedService.color}-300 transform transition-all duration-300
@@ -157,7 +157,7 @@ export default function ServiceGrid() {
             onClick={(e) => e.stopPropagation()} // Evita cerrar al clic dentro
           >
             {/* Botón cerrar */}
-            <button 
+            <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition p-2 rounded-full hover:bg-gray-100"
             >
