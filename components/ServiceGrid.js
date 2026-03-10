@@ -4,6 +4,41 @@ import { useState } from 'react';
 import { Briefcase, ShieldCheck, Scale, Users, X } from 'lucide-react';
 import Link from 'next/link';
 
+const colorStyles = {
+  blue: {
+    hoverBorder: 'hover:border-blue-300',
+    iconBg: 'bg-blue-100/50 group-hover:bg-blue-200/70',
+    iconText: 'text-blue-600 group-hover:text-blue-800',
+    titleHover: 'group-hover:text-blue-700',
+    modalIconBg: 'bg-blue-100/50',
+    modalIconText: 'text-blue-600'
+  },
+  green: {
+    hoverBorder: 'hover:border-green-300',
+    iconBg: 'bg-green-100/50 group-hover:bg-green-200/70',
+    iconText: 'text-green-600 group-hover:text-green-800',
+    titleHover: 'group-hover:text-green-700',
+    modalIconBg: 'bg-green-100/50',
+    modalIconText: 'text-green-600'
+  },
+  purple: {
+    hoverBorder: 'hover:border-purple-300',
+    iconBg: 'bg-purple-100/50 group-hover:bg-purple-200/70',
+    iconText: 'text-purple-600 group-hover:text-purple-800',
+    titleHover: 'group-hover:text-purple-700',
+    modalIconBg: 'bg-purple-100/50',
+    modalIconText: 'text-purple-600'
+  },
+  amber: {
+    hoverBorder: 'hover:border-amber-300',
+    iconBg: 'bg-amber-100/50 group-hover:bg-amber-200/70',
+    iconText: 'text-amber-600 group-hover:text-amber-800',
+    titleHover: 'group-hover:text-amber-700',
+    modalIconBg: 'bg-amber-100/50',
+    modalIconText: 'text-amber-600'
+  }
+};
+
 const services = [
   {
     id: 1,
@@ -44,7 +79,7 @@ const services = [
     color: 'amber',
     detailPage: '/servicios/societario',
     fullDescription: 'Societario y Acciones detallado...'
-  },
+  }
 ];
 
 export default function ServiceGrid() {
@@ -53,20 +88,21 @@ export default function ServiceGrid() {
   const openModal = (service) => setSelectedService(service);
   const closeModal = () => setSelectedService(null);
 
+  const selectedStyle = selectedService ? colorStyles[selectedService.color] : null;
+
   return (
-    <section id="servicios" className="py-16 md:py-24 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-navy">Servicios destacados</h2>
+    <section id="servicios" className="bg-gray-50 py-16 md:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 text-center">
+          <h2 className="text-4xl font-bold text-navy md:text-5xl">Servicios destacados</h2>
           <p className="mt-4 text-xl text-slate-600">Soluciones legales especializadas para cada área clave de tu empresa.</p>
         </div>
 
-        {/* Tabs visuales (sin filtrado real) */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="mb-12 flex flex-wrap justify-center gap-4">
           {['Todos', 'Corporativo', 'Cumplimiento', 'Patrimonial', 'Societario'].map((filter) => (
             <button
               key={filter}
-              className="px-6 py-3 rounded-full font-medium text-sm bg-white border-2 border-gold/50 text-navy hover:bg-gold hover:text-navy transition-all focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
+              className="rounded-full border-2 border-gold/50 bg-white px-6 py-3 text-sm font-medium text-navy transition-all hover:bg-gold hover:text-navy focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
               aria-pressed="false"
             >
               {filter}
@@ -74,31 +110,28 @@ export default function ServiceGrid() {
           ))}
         </div>
 
-        {/* Grid siempre visible */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {services.map((service) => {
             const Icon = service.icon;
+            const serviceStyle = colorStyles[service.color];
+
             return (
               <article
                 key={service.id}
                 onClick={() => openModal(service)}
-                className={`
-                  group cursor-pointer bg-white rounded-2xl p-8 shadow-lg border border-slate-100 
-                  hover:shadow-2xl hover:-translate-y-4 hover:border-${service.color}-300
-                  transition-all duration-500 ease-out
-                `}
+                className={`group cursor-pointer rounded-2xl border border-slate-100 bg-white p-8 shadow-lg transition-all duration-500 ease-out hover:-translate-y-4 hover:shadow-2xl ${serviceStyle.hoverBorder}`}
               >
-                <div className="flex justify-center mb-6">
-                  <div className={`p-5 rounded-full bg-${service.color}-100/50 group-hover:bg-${service.color}-200/70 transition-all`}>
-                    <Icon className={`w-14 h-14 text-${service.color}-600 group-hover:text-${service.color}-800 transition-colors`} />
+                <div className="mb-6 flex justify-center">
+                  <div className={`rounded-full p-5 transition-all ${serviceStyle.iconBg}`}>
+                    <Icon className={`h-14 w-14 transition-colors ${serviceStyle.iconText}`} />
                   </div>
                 </div>
-                <h3 className={`text-2xl font-bold text-center mb-4 text-navy group-hover:text-${service.color}-700 transition-colors`}>
+                <h3 className={`mb-4 text-center text-2xl font-bold text-navy transition-colors ${serviceStyle.titleHover}`}>
                   {service.title}
                 </h3>
-                <p className="text-slate-700 text-center">{service.description}</p>
-                <div className="text-center mt-6">
-                  <span className="text-gold font-medium cursor-pointer">Ver más →</span>
+                <p className="text-center text-slate-700">{service.description}</p>
+                <div className="mt-6 text-center">
+                  <span className="cursor-pointer font-medium text-gold">Ver más →</span>
                 </div>
               </article>
             );
@@ -106,52 +139,42 @@ export default function ServiceGrid() {
         </div>
       </div>
 
-      {/* MODAL CENTRADO EN TODA LA PANTALLA */}
-      {selectedService && (
+      {selectedService && selectedStyle && (
         <div
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
           onClick={closeModal}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Detalle de ${selectedService.title}`}
         >
           <div
-            className={`
-              relative bg-white rounded-3xl p-10 max-w-2xl w-full max-h-[90vh] overflow-y-auto
-              shadow-2xl border border-gray-200 transform transition-all duration-300
-            `}
-            onClick={(e) => e.stopPropagation()} // Evita cerrar al clic dentro
+            className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-gray-200 bg-white p-10 shadow-2xl transition-all duration-300"
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* Botón cerrar */}
             <button
               onClick={closeModal}
-              className="absolute top-5 right-5 text-gray-500 hover:text-gray-800 transition p-2 rounded-full hover:bg-gray-100"
+              className="absolute right-5 top-5 rounded-full p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-800"
+              aria-label="Cerrar detalle del servicio"
             >
               <X size={32} />
             </button>
 
-            {/* Icono grande */}
-            <div className="flex justify-center mb-8">
-              <div className={`p-6 rounded-full bg-${selectedService.color}-100/50`}>
-                <selectedService.icon className={`w-24 h-24 text-${selectedService.color}-600`} />
+            <div className="mb-8 flex justify-center">
+              <div className={`rounded-full p-6 ${selectedStyle.modalIconBg}`}>
+                <selectedService.icon className={`h-24 w-24 ${selectedStyle.modalIconText}`} />
               </div>
             </div>
 
-            {/* Título */}
-            <h3 className={`text-4xl font-bold text-center mb-6 text-navy`}>
-              {selectedService.title}
-            </h3>
+            <h3 className="mb-6 text-center text-4xl font-bold text-navy">{selectedService.title}</h3>
 
-            {/* Descripción completa */}
-            <p className="text-slate-700 text-lg leading-relaxed mb-10 text-center px-4">
+            <p className="mb-10 px-4 text-center text-lg leading-relaxed text-slate-700">
               {selectedService.fullDescription || selectedService.description}
             </p>
 
-            {/* Botón a página detallada */}
             <div className="flex justify-center">
               <Link
                 href={selectedService.detailPage}
-                className={`
-                  inline-flex items-center px-10 py-5 bg-navy text-white font-semibold text-lg
-                  rounded-2xl hover:bg-gray-900 transition-all duration-300 shadow-lg
-                `}
+                className="inline-flex items-center rounded-2xl bg-navy px-10 py-5 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:bg-gray-900"
               >
                 Ver detalles completos del servicio
                 <span className="ml-3">→</span>

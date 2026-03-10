@@ -2,71 +2,95 @@
 
 import { useState } from 'react';
 
-export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+const initialData = {
+  name: '',
+  email: '',
+  message: ''
+};
 
+function getValidationErrors(data) {
+  const validationErrors = {};
+
+  if (!data.name.trim()) {
+    validationErrors.name = 'El nombre es requerido';
+  } else if (data.name.trim().length < 2) {
+    validationErrors.name = 'El nombre debe tener al menos 2 caracteres';
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!data.email.trim()) {
+    validationErrors.email = 'El correo electrónico es requerido';
+  } else if (!emailRegex.test(data.email)) {
+    validationErrors.email = 'Ingresa un correo electrónico válido';
+  }
+
+  if (!data.message.trim()) {
+    validationErrors.message = 'El mensaje es requerido';
+  } else if (data.message.trim().length < 10) {
+    validationErrors.message = 'El mensaje debe tener al menos 10 caracteres';
+  }
+
+  return validationErrors;
+}
+
+export default function ContactForm() {
+  const [formData, setFormData] = useState(initialData);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const validateField = (name, value) => {
-    const newErrors = { ...errors };
-
-    switch (name) {
-      case 'name':
-        if (!value.trim()) {
-          newErrors.name = 'El nombre es requerido';
-        } else if (value.trim().length < 2) {
-          newErrors.name = 'El nombre debe tener al menos 2 caracteres';
-        } else {
-          delete newErrors.name;
-        }
-        break;
-      case 'email':
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!value.trim()) {
-          newErrors.email = 'El correo electrónico es requerido';
-        } else if (!emailRegex.test(value)) {
-          newErrors.email = 'Ingresa un correo electrónico válido';
-        } else {
-          delete newErrors.email;
-        }
-        break;
-      case 'message':
-        if (!value.trim()) {
-          newErrors.message = 'El mensaje es requerido';
-        } else if (value.trim().length < 10) {
-          newErrors.message = 'El mensaje debe tener al menos 10 caracteres';
-        } else {
-          delete newErrors.message;
-        }
-        break;
-    }
-
-    setErrors(newErrors);
-  };
+  const [feedback, setFeedback] = useState({ type: '', text: '' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    validateField(name, value);
+    const updatedData = { ...formData, [name]: value };
+
+    setFormData(updatedData);
+    setErrors(getValidationErrors(updatedData));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate all fields
-    Object.keys(formData).forEach(key => validateField(key, formData[key]));
+    const validationErrors = getValidationErrors(formData);
+    setErrors(validationErrors);
+    setFeedback({ type: '', text: '' });
 
-    if (Object.keys(errors).length === 0) {
-      setIsSubmitting(true);
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      alert('¡Mensaje enviado exitosamente! Nos pondremos en contacto pronto.');
-      setFormData({ name: '', email: '', message: '' });
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message
+        })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'No se pudo enviar el mensaje. Inténtalo nuevamente.');
+      }
+
+      setFeedback({
+        type: 'success',
+        text: result.message || '¡Mensaje enviado exitosamente! Nos pondremos en contacto pronto.'
+      });
+      setFormData(initialData);
+      setErrors({});
+    } catch (error) {
+      setFeedback({
+        type: 'error',
+        text: error.message || 'Ocurrió un error al enviar el formulario.'
+      });
+    } finally {
       setIsSubmitting(false);
     }
   };
@@ -74,7 +98,7 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="mt-8 grid gap-4 text-left" noValidate>
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">
+        <label htmlFor="name" className="mb-1 block text-sm font-medium text-slate-700">
           Nombre completo *
         </label>
         <input
@@ -87,8 +111,8 @@ export default function ContactForm() {
           className={`w-full rounded-xl border bg-white px-4 py-3 outline-none ring-gold transition focus:ring ${
             errors.name ? 'border-red-500' : 'border-slate-300'
           }`}
-          aria-describedby={errors.name ? "name-error" : undefined}
-          aria-invalid={errors.name ? "true" : "false"}
+          aria-describedby={errors.name ? 'name-error' : undefined}
+          aria-invalid={errors.name ? 'true' : 'false'}
         />
         {errors.name && (
           <p id="name-error" className="mt-1 text-sm text-red-600" role="alert">
@@ -98,7 +122,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
+        <label htmlFor="email" className="mb-1 block text-sm font-medium text-slate-700">
           Correo corporativo *
         </label>
         <input
@@ -111,8 +135,8 @@ export default function ContactForm() {
           className={`w-full rounded-xl border bg-white px-4 py-3 outline-none ring-gold transition focus:ring ${
             errors.email ? 'border-red-500' : 'border-slate-300'
           }`}
-          aria-describedby={errors.email ? "email-error" : undefined}
-          aria-invalid={errors.email ? "true" : "false"}
+          aria-describedby={errors.email ? 'email-error' : undefined}
+          aria-invalid={errors.email ? 'true' : 'false'}
         />
         {errors.email && (
           <p id="email-error" className="mt-1 text-sm text-red-600" role="alert">
@@ -122,7 +146,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1">
+        <label htmlFor="message" className="mb-1 block text-sm font-medium text-slate-700">
           ¿Qué necesitas resolver? *
         </label>
         <textarea
@@ -132,11 +156,11 @@ export default function ContactForm() {
           value={formData.message}
           onChange={handleChange}
           placeholder="Describe tu caso legal..."
-          className={`w-full rounded-xl border bg-white px-4 py-3 outline-none ring-gold transition focus:ring resize-none ${
+          className={`w-full resize-none rounded-xl border bg-white px-4 py-3 outline-none ring-gold transition focus:ring ${
             errors.message ? 'border-red-500' : 'border-slate-300'
           }`}
-          aria-describedby={errors.message ? "message-error" : undefined}
-          aria-invalid={errors.message ? "true" : "false"}
+          aria-describedby={errors.message ? 'message-error' : undefined}
+          aria-invalid={errors.message ? 'true' : 'false'}
         />
         {errors.message && (
           <p id="message-error" className="mt-1 text-sm text-red-600" role="alert">
@@ -145,10 +169,23 @@ export default function ContactForm() {
         )}
       </div>
 
+      {feedback.text && (
+        <p
+          className={`rounded-lg px-4 py-3 text-sm ${
+            feedback.type === 'success'
+              ? 'border border-emerald-200 bg-emerald-50 text-emerald-700'
+              : 'border border-red-200 bg-red-50 text-red-700'
+          }`}
+          role="status"
+        >
+          {feedback.text}
+        </p>
+      )}
+
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-xl bg-gold px-6 py-3 font-semibold text-navy transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="rounded-xl bg-gold px-6 py-3 font-semibold text-navy transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isSubmitting ? 'Enviando...' : 'Enviar solicitud'}
       </button>
