@@ -96,6 +96,8 @@ export default function ServiceGrid() {
 
   const selectedStyle = selectedService ? colorStyles[selectedService.color] : null;
 
+  const selectedStyle = selectedService ? colorStyles[selectedService.color] : null;
+
   return (
     <section id="servicios" className="bg-gray-50 py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
