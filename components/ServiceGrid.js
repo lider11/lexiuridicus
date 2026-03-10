@@ -145,8 +145,9 @@ export default function ServiceGrid() {
       {/* Modal centrado perfectamente */}
       {selectedService && (
         <div
-          className="fixed inset-0 bg-black/70 grid place-items-center z-50 p-4 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 backdrop-blur-sm overflow-hidden"
           onClick={closeModal}
+          style={{ display: 'flex' }}
         >
           <div
             className={`
