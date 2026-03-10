@@ -4,6 +4,16 @@ export const metadata = {
   title: 'Lex Iuridicus | Servicios Jurídicos Empresariales',
   description:
     'Asesoría jurídica empresarial para cumplimiento, gobierno corporativo y gestión de riesgos.',
+  metadataBase: new URL('https://darkslateblue-sheep-899946.hostingersite.com'),
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Lex Iuridicus'
+  },
+  formatDetection: {
+    telephone: false
+  },
   openGraph: {
     title: 'Lex Iuridicus | Servicios Jurídicos Empresariales',
     description: 'Especialistas en cumplimiento normativo, gobierno corporativo y gestión de riesgos legales para empresas.',
@@ -27,7 +37,18 @@ export const metadata = {
     images: ['https://darkslateblue-sheep-899946.hostingersite.com/og-image.png']
   },
   canonical: 'https://darkslateblue-sheep-899946.hostingersite.com/',
-  robots: 'index, follow',
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
+  },
   keywords: 'asesoría jurídica, cumplimiento normativo, gobierno corporativo, gestión de riesgos, derecho empresarial'
 };
 
