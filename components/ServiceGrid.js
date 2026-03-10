@@ -145,58 +145,59 @@ export default function ServiceGrid() {
       {/* Modal centrado perfectamente */}
       {selectedService && (
         <div
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 backdrop-blur-sm overflow-hidden"
+          className="fixed inset-0 bg-black/70 z-50 backdrop-blur-sm overflow-y-auto"
           onClick={closeModal}
-          style={{ display: 'flex' }}
         >
-          <div
-            className={`
-              relative bg-white rounded-2xl p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto
-              shadow-2xl border border-${selectedService.color}-300 transform transition-all duration-300
-              scale-100 opacity-100
-            `}
-            onClick={(e) => e.stopPropagation()} // Evita cerrar al clic dentro
-          >
-            {/* Botón cerrar */}
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition p-2 rounded-full hover:bg-gray-100"
+          <div className="flex items-center justify-center min-h-screen px-4">
+            <div
+              className={`
+                relative bg-white rounded-2xl p-8 w-full max-w-lg max-h-[90vh] overflow-y-auto
+                shadow-2xl border border-${selectedService.color}-300 transform transition-all duration-300
+                scale-100 opacity-100
+              `}
+              onClick={(e) => e.stopPropagation()} // Evita cerrar al clic dentro
             >
-              <X className="w-8 h-8" />
-            </button>
+              {/* Botón cerrar */}
+              <button
+                onClick={closeModal}
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition p-2 rounded-full hover:bg-gray-100"
+              >
+                <X className="w-8 h-8" />
+              </button>
 
-            {/* Icono grande */}
-            <div className="flex justify-center mb-8">
-              <div className={`
+              {/* Icono grande */}
+              <div className="flex justify-center mb-8">
+                <div className={`
                 p-6 rounded-full bg-${selectedService.color}-100/50
               `}>
-                <selectedService.icon className={`w-24 h-24 text-${selectedService.color}-600`} />
+                  <selectedService.icon className={`w-24 h-24 text-${selectedService.color}-600`} />
+                </div>
               </div>
-            </div>
 
-            {/* Título */}
-            <h3 className={`text-3xl font-bold text-center mb-6 text-navy`}>
-              {selectedService.title}
-            </h3>
+              {/* Título */}
+              <h3 className={`text-3xl font-bold text-center mb-6 text-navy`}>
+                {selectedService.title}
+              </h3>
 
-            {/* Descripción ampliada */}
-            <p className="text-slate-700 text-lg leading-relaxed mb-8 text-center">
-              {selectedService.fullDescription || selectedService.description}
-            </p>
+              {/* Descripción ampliada */}
+              <p className="text-slate-700 text-lg leading-relaxed mb-8 text-center">
+                {selectedService.fullDescription || selectedService.description}
+              </p>
 
-            {/* Botón para página detallada */}
-            <div className="text-center">
-              <Link
-                href={selectedService.detailPage}
-                className={`
+              {/* Botón para página detallada */}
+              <div className="text-center">
+                <Link
+                  href={selectedService.detailPage}
+                  className={`
                   inline-flex items-center px-8 py-4 bg-${selectedService.color}-600 text-white font-semibold 
                   rounded-lg hover:bg-${selectedService.color}-700 transition-all duration-300 shadow-lg
                   text-lg
                 `}
-              >
-                Ver detalles completos del servicio
-                <span className="ml-3">→</span>
-              </Link>
+                >
+                  Ver detalles completos del servicio
+                  <span className="ml-3">→</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
