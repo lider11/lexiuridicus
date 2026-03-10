@@ -1,0 +1,21 @@
+{
+  "name": "Lex Iuridicus - Asesoría Jurídica Empresarial",
+  "short_name": "Lex Iuridicus",
+  "description": "Especialistas en cumplimiento normativo, gobierno corporativo y gestión de riesgos legales para empresas",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#1e293b",
+  "icons": [
+    {
+      "src": "/logo-lexiuridicus.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "prefer_related_applications": false
+}
