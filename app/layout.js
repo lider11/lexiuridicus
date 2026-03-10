@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import './globals.css';
 
 export const metadata = {
@@ -21,20 +22,13 @@ export const metadata = {
     siteName: 'Lex Iuridicus',
     locale: 'es_ES',
     type: 'website',
-    images: [
-      {
-        url: 'https://darkslateblue-sheep-899946.hostingersite.com/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Lex Iuridicus - Asesoría Jurídica Empresarial'
-      }
-    ]
+    images: []
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Lex Iuridicus | Servicios Jurídicos Empresariales',
     description: 'Especialistas en cumplimiento normativo, gobierno corporativo y gestión de riesgos legales.',
-    images: ['https://darkslateblue-sheep-899946.hostingersite.com/og-image.png']
+    images: []
   },
   canonical: 'https://darkslateblue-sheep-899946.hostingersite.com/',
   robots: {
@@ -53,12 +47,15 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Lex Iuridicus",
     "url": "https://darkslateblue-sheep-899946.hostingersite.com/",
-    "logo": "https://darkslateblue-sheep-899946.hostingersite.com/logo.png",
+    "logo": "https://darkslateblue-sheep-899946.hostingersite.com/logo-lexiuridicus.svg",
     "description": "Asesoría jurídica empresarial especializada en cumplimiento normativo, gobierno corporativo y gestión de riesgos legales.",
     "contactPoint": {
       "@type": "ContactPoint",
@@ -89,9 +86,21 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <header role="banner">
-          {children}
-        </header>
+        {gaId && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                window.gtag = gtag;
+                gtag('js', new Date());
+                gtag('config', '${gaId}');
+              `}
+            </Script>
+          </>
+        )}
+        {children}
       </body>
     </html>
   );

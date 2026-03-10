@@ -62,6 +62,7 @@ const nextConfig = {
   // Environment variables públicas
   env: {
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://darkslateblue-sheep-899946.hostingersite.com',
+    NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID || '',
   },
 };
 
