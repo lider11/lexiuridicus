@@ -1,3 +1,4 @@
+import Footer from '../components/Footer';
 import './globals.css';
 
 export const metadata = {
@@ -88,10 +89,9 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body>
-        <header role="banner">
-          {children}
-        </header>
+      <body className="min-h-screen bg-white text-slate-900">
+        {children}
+        <Footer />
       </body>
     </html>
   );
