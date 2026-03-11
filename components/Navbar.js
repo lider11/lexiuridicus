@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 
 const links = [
@@ -16,12 +17,13 @@ export default function Navbar() {
     <header className="sticky top-0 z-20 border-b border-slate-700 bg-navy/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 text-white">
         <a href="#inicio" className="flex items-center gap-3">
-          <img
+          <Image
             src="/logo-lexiuridicus.svg"
             alt="Logo Lex Iuridicus"
-            width="52"
-            height="52"
+            width={52}
+            height={52}
             className="h-12 w-12 rounded-xl ring-1 ring-gold/40"
+            priority
           />
           <span className="leading-tight">
             <span className="block text-xl font-bold tracking-wide md:text-2xl">Lex Iuridicus</span>

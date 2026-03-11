@@ -1,16 +1,13 @@
 export async function POST(req) {
-  // Validar método
-  if (req.method !== 'POST') {
-    return Response.json(
-      { error: 'Método no permitido' },
-      { status: 405 }
-    );
-  }
-
   try {
-    const { email, nombre, empresa, mensaje, telefono } = await req.json();
+    const payload = await req.json();
 
-    // Validación básica
+    const email = payload.email;
+    const nombre = payload.nombre || payload.name;
+    const empresa = payload.empresa || payload.company || '';
+    const mensaje = payload.mensaje || payload.message;
+    const telefono = payload.telefono || payload.phone || '';
+
     if (!email || !nombre || !mensaje) {
       return Response.json(
         { error: 'Campos requeridos faltantes' },
@@ -18,7 +15,6 @@ export async function POST(req) {
       );
     }
 
-    // Validar email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return Response.json(
@@ -27,17 +23,12 @@ export async function POST(req) {
       );
     }
 
-    // Aquí iría la lógica real de envío de email
-    // Por ahora, simular envío exitoso
     console.log('📧 Contacto recibido:', { email, nombre, empresa, mensaje, telefono });
 
-    // Guardar en base de datos o enviar email real
-    // const result = await sendEmail({ email, nombre, empresa, mensaje, telefono });
-
     return Response.json(
-      { 
-        success: true, 
-        message: 'Tu mensaje ha sido recibido. Nos pondremos en contacto pronto.' 
+      {
+        success: true,
+        message: 'Tu mensaje ha sido recibido. Nos pondremos en contacto pronto.'
       },
       { status: 200 }
     );
@@ -49,37 +40,3 @@ export async function POST(req) {
     );
   }
 }
-
-// Función para enviar email con Nodemailer (implementar según sea necesario)
-// async function sendEmail(contactData) {
-//   // Instalar nodemailer primero: npm install nodemailer
-//   const nodemailer = require('nodemailer');
-//   
-//   const transporter = nodemailer.createTransport({
-//     host: process.env.SMTP_HOST,
-//     port: process.env.SMTP_PORT,
-//     secure: true,
-//     auth: {
-//       user: process.env.SMTP_USER,
-//       pass: process.env.SMTP_PASS,
-//     },
-//   });
-//
-//   const mailOptions = {
-//     from: process.env.SMTP_USER,
-//     to: process.env.CONTACT_EMAIL,
-//     subject: `Nuevo contacto de ${contactData.nombre} - Lex Iuridicus`,
-//     html: `
-//       <h2>Nuevo mensaje de contacto</h2>
-//       <p><strong>Nombre:</strong> ${contactData.nombre}</p>
-//       <p><strong>Email:</strong> ${contactData.email}</p>
-//       <p><strong>Teléfono:</strong> ${contactData.telefono || 'No proporcionado'}</p>
-//       <p><strong>Empresa:</strong> ${contactData.empresa || 'No especificada'}</p>
-//       <p><strong>Mensaje:</strong></p>
-//       <p>${contactData.mensaje}</p>
-//     `,
-//     replyTo: contactData.email,
-//   };
-//
-//   return transporter.sendMail(mailOptions);
-// }
