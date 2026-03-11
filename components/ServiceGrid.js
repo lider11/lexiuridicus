@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Briefcase, ShieldCheck, Scale, Users, X } from 'components/icons';
+import { Briefcase, ShieldCheck, Scale, Users, X } from './icons';
 import Link from 'next/link';
 
 const services = [
