@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Scale, CheckCircle, Target, Users, HeartHandshake, ShieldCheck, FileText, ArrowLeft } from 'lucide-react';
+import { Scale, CheckCircle, Target, Users, HeartHandshake, ShieldCheck, FileText, ArrowLeft } from 'components/icons';
 
 export const metadata = {
   title: 'Protocolo de Familia | Lex Iuridicus',

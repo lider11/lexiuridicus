@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ShieldCheck, CheckCircle, Target, AlertTriangle, BookOpen, Users, ArrowLeft } from 'lucide-react';
+import { ShieldCheck, CheckCircle, Target, AlertTriangle, BookOpen, Users, ArrowLeft } from 'components/icons';
 
 export const metadata = {
   title: 'Cumplimiento y Gestión de Riesgos | Lex Iuridicus',
