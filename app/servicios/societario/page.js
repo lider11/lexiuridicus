@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Users, Gavel, FileText, Handshake, Scale, CheckCircle, Target, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { Users, Gavel, FileText, Handshake, Scale, CheckCircle, Target, ArrowLeft, ShieldCheck } from 'components/icons';
 
 export const metadata = {
   title: 'Asesoría Societaria y Acciones | Lex Iuridicus',
