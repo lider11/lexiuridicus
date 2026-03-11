@@ -1,5 +1,5 @@
-import ServicePageTemplate from 'components/services/ServicePageTemplate';
-import { servicePages } from 'data/servicePages';
+import Link from 'next/link';
+import { Users, Gavel, FileText, Handshake, Scale, CheckCircle, Target, ArrowLeft, ShieldCheck } from '../../../components/icons';
 
 export const metadata = servicePages.societario.metadata;
 

@@ -1,6 +1,8 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
+import { Briefcase, ShieldCheck, Scale, Users, X } from './icons';
+import Link from 'next/link';
 
 const services = [
   {

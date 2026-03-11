@@ -1,3 +1,4 @@
+import Footer from '../components/Footer';
 import './globals.css';
 
 export const metadata = {
@@ -9,7 +10,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(schemaData),
+          }}
+        />
+      </head>
+      <body className="min-h-screen bg-white text-slate-900">
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

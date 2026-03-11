@@ -1,5 +1,5 @@
-import ServicePageTemplate from 'components/services/ServicePageTemplate';
-import { servicePages } from 'data/servicePages';
+import Link from 'next/link';
+import { ShieldCheck, CheckCircle, Target, AlertTriangle, BookOpen, Users, ArrowLeft } from '../../../components/icons';
 
 export const metadata = servicePages.cumplimiento.metadata;
 

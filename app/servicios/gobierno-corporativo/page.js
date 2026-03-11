@@ -1,5 +1,5 @@
-import ServicePageTemplate from 'components/services/ServicePageTemplate';
-import { servicePages } from 'data/servicePages';
+import Link from 'next/link';
+import { Briefcase, CheckCircle, Target, Users, ArrowLeft, Gavel, FileText, Handshake, Scale, ShieldCheck } from '../../../components/icons';
 
 export const metadata = servicePages['gobierno-corporativo'].metadata;
 
